@@ -1,0 +1,362 @@
+﻿* {
+	font-family: Tahoma, Helvetica, Arial, sans-serif;
+	line-height: 1.4em;
+	font-size: 0.97em;
+}
+html, body, header, div, canvas, h1, h2
+{
+	margin:0px;
+	border-width:0px;
+	padding:0px;
+	color:black;
+}
+img {
+	margin-left: auto;
+	margin-right: auto;
+	border: none;
+}
+/******************************************************************************
+					Styles for main web - headers, footer
+*******************************************************************************/
+.header {
+	text-align:center;
+	color: black;
+	margin-top: 15px;
+}
+.header h2 {
+	color: black;
+	font-size: 1.2em;
+}
+.body {
+	min-height: 100%;
+	height: auto !important;
+	height: 100%;
+	margin: 0 auto -10px;
+	text-align: center;
+}
+.main_body {
+	max-width: 1024px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 10px;
+	text-align: left;
+	min-height: 650px;
+	margin-top: 20px;
+}
+.footer {
+	height: 80px;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+	clear: both;
+	text-align: left;
+	position: relative;
+	top: 10px;
+}
+.footer_bar {
+	width: 100%;
+	background-color: #033;
+	border-top:1px black solid;
+	border-bottom:1px black solid;
+	height: 25px;
+	font-size: 0.85em;
+	color: #FFF;
+	text-align: center;
+	padding-top: 5px;
+}
+.navbar {
+	width: 100%;
+	background-color: #033;
+	border-top:1px black solid;
+	border-bottom:1px black solid;
+	margin-top: 10px;
+	height: 25px;
+	font-size: 0.85em;
+	color: #FFF;
+	text-align: center;
+}
+.navbar ul {
+	position: relative;
+	top: -13px;
+	margin-left: auto;
+	margin-right: auto;
+	list-style-type: none;
+}
+.navbar ul a li.link {
+	display: inline-block;
+	color:#FFF;
+	background-color:#033;
+	border: 1px #033 solid;
+	padding: 5px;
+	padding-left: 10px;
+	padding-right: 10px;
+	height: 14px;
+}
+.navbar ul a {
+	text-decoration: none;
+	font-weight: bold;
+	color:#CCC;
+}
+.navbar ul a:hover {
+	color:#333;
+}
+.navbar ul a:hover li.link{
+	color:#060;
+	background:#CCC;
+	border: 1px black solid;
+}
+li.navbar_spacer {
+	display: inline-block;
+	width: 40px;
+	padding: none;
+	background-color:#033;
+	border: none;
+	height: 25px;
+	position: relative;
+	top: -5px;
+}
+li.navbar_spacer:hover {
+	border: none;
+	background-color:#033;
+}
+
+/******************************************************************************
+						Styles for additional boxes, forms
+*******************************************************************************/
+.notice {
+	max-width: 1024px;
+	margin-left: auto;
+	margin-right: auto;
+	background-color:#DDD;
+	border-top: 1px black solid;
+	border-bottom: 1px black solid;
+	padding: 10px;
+	text-align: left;
+	margin-top: 20px;
+}
+input {
+	border: 2px #CCC solid;
+	height: 20px;
+	padding:5px;
+}
+button {
+	height: 25px;
+}
+
+
+
+
+
+
+
+
+
+/******************************************************************************
+							Styles for viewer
+*******************************************************************************/
+
+v_header
+{
+	background-color:#141E1E;
+}
+div#v_wrapper
+{
+	background-color:#2D3233;
+	height:100%;
+	width:100%;
+}
+div#v_cover
+{
+	position:fixed;
+	background-color:black;
+	height:100%;
+	width:100%;
+	opacity:0.4;
+	filter:alpha(opacity=40);
+	z-index: 5;
+}
+div#v_content
+{
+	width:100%;
+	/*height:600px; handled in javascript */
+}
+div#v_mainview
+{
+	height:100%;
+	width:50%;
+	display:inline-block;
+	position:relative;
+}
+canvas#View
+{
+	position:absolute;
+	top:0px;
+	left:0px;
+	background-color:black;
+	width:100%;
+	height:100%;
+	display:inline;
+}
+div#viewcontrols
+{
+	background-color:rgba(255, 255, 255, 0.1);
+	position:absolute;
+	bottom:-50px;
+	left:0px;
+	height:50px;
+	width:100%;
+	border-top:1px #FFFFFF solid;
+}
+div.viewcontrol 
+{
+	display:inline-block;
+	width:48px;
+	height:48px;
+	cursor:pointer;
+}
+div#expand
+{
+	background-image:url('../content/images/appbar.arrow.expand.png');
+}
+div#collapsed
+{
+	background-image:url('../content/images/appbar.arrow.collapsed.png');
+	display:none;
+}
+
+/****************************************************************************
+					Styles for repo lists
+****************************************************************************/
+.repo {
+	max-width: 1024px;
+	margin-left: auto;
+	margin-right: auto;
+}
+.repo div.repo_main {
+	width: 1024px;
+	background-color:#FFF;
+	border-bottom: 1px solid #999;
+	margin: 0 0 0 0;
+	padding: 0 0 0 0;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	text-align: left;
+}
+.repo div.repo_main:hover {
+	background-color:#CCC;
+}
+.repo div.repo_main span {
+	display: inline-block;
+	width: 150px;
+	padding-right: 10px;
+	text-align: center;
+	position: relative;
+	top: -6px;
+}
+.repo div.repo_main span a.imagelink {
+	position: relative;
+	top: 8px;
+}
+.repo div.repo_main span a.textlink {
+	text-decoration: none;
+	color: #666;
+}
+.repo div.repo_header {
+	width: 1024px;
+	background-color:#FFF;
+	border-bottom: 2px solid #999;
+	border-top: 2px solid #999;
+	padding-top: 7px;
+	padding-bottom: 7px;
+	text-align: left;
+	font-size: 1.1em;
+	font-weight: bold;
+}
+.repo div.repo_header span {
+	display: inline-block;
+	width: 150px;
+	padding-right: 10px;
+	text-align: center;
+}
+/****************************************************************************
+					Assorted forms
+****************************************************************************/
+.login_form {
+	margin-left: auto;
+	margin-right: auto;
+	width: 500px;
+	padding-top: 50px;
+}
+.login_form h1 {
+	padding-bottom: 15px;
+	font-size: 1.3em;
+}
+.login_form form input {
+	width: 300px;
+	float: left;
+	clear: left;
+	margin-bottom: 10px;
+	height: 30px;
+	padding:5px;
+	font-size: 1.15em;
+	color:#333;
+	font-weight: bold;
+}
+.login_form form p {
+	float: left;
+	clear: none;
+	padding-left: 20px;
+	font-size: 1.15em;
+	position: relative;
+	top: -5px;
+}
+.login_form form p a {
+	text-decoration: none;
+	color:#060;
+	font-style: italic;
+	position: relative;
+	top: -10px;
+}
+.login_form form p a:hover {
+	color: #666;
+}
+.login_form form p.form_clear {
+	clear: left;
+	float: left
+	font-style: italic;
+}
+.form_spacer {
+	float: left;
+	clear: left;
+	height: 30px;
+	padding: 10px;
+	width: 400px;
+}
+.fileinputs
+{
+	position: relative;
+	width: 300px;
+	float: left;
+	clear: left;
+	padding:5px;
+}
+div.fakefile {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	z-index: 1;
+}
+div.fakefile input {
+	width: 210px;
+}
+input.file
+{
+	width: 300px;
+	position: relative;
+	text-align: right;
+	-moz-opacity:0 ;
+	filter:alpha(opacity: 0);
+	opacity: 0;
+	z-index: 2;
+}
