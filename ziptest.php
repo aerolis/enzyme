@@ -24,4 +24,17 @@ if (false)
 		$i++;
 	}
 }
+
+if (true)
+{
+	$str	= "output/jV9OpoG8Uc/jV9OpoG8Uc.zip";
+	if (file_exists($str))
+		echo "true 1";
+	if (fileExists($str))
+		echo "true 2";
+}
+
+function fileExists($path){
+    return (@fopen($path,"r")==true);
+}
 ?>

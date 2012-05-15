@@ -20,8 +20,21 @@ if (empty($succ))
 {
 	echo '
 	<div class="login_form">
-	<h1>Register</h1>
-	<form action="../scripts/createUser.php" method="post" onkeyup="checkRegisterReady();">
+	<h1>Register</h1>';
+	
+	echo '<p id="form_warning"';
+	if (isset($warn) && $warn != 0){ echo ' style="display:block;">'; }
+	if ($warn == 1)
+		echo 'Passwords do no match';
+	if ($warn == 2)
+		echo 'Please enter a valid email address';
+	if ($warn == 4)
+		echo 'Please fill all fields before submitting';
+	if ($warn == 5)
+		echo 'This email is already in use';
+	echo '</p>';
+	
+	echo '<form action="../scripts/createUser.php" method="post" onkeyup="checkRegisterReady();" id="register_form">
 	<input type="text" name="fname" /><p>First Name *</p>
 	<input type="text" name="lname" /><p>Last Name *</p>
 	<input type="text" name="group" /><p>University / Company</p>
@@ -31,7 +44,7 @@ if (empty($succ))
 	<input type="password" name="pass1"/><p>Password *</p>
 	<input type="password" name="pass2"/><p>Confirm Password *</p>
 	<div class="form_spacer" id="pass_spacer"></div>
-	<input type="submit" value="Submit" id="form_submit" style="width: 100px; background-color:#CCC; color: black; border:#666 3px solid; padding: 0 0 0 0;" />
+	<img class="submit" src="../images/register.png" onclick="submitForm(\'register_form\',true,\'group\');"/>
 	<p id="form_check"></p>
 	<p class="form_clear">* denotes required fields</p>
 	</form>
@@ -40,7 +53,8 @@ if (empty($succ))
 }
 else
 {
-	echo "Welcome, $fname $lname! You user account has been created successfully.\n To get started, upload a .pdb file <a href='../submit'>here.</a> To view your sumbitted proteins, check out your protein repository <a href='../repo'>here.</a>";
+	echo "Welcome, $fname $lname! You user account has been created successfully.\n To get started, upload a .pdb file <a href='../submit'>here.</a> To view your submitted proteins, check out your protein repository <a href='../repo'>here.</a><br><br>\n";
+	
 }
 
 ?>

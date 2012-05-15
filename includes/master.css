@@ -56,7 +56,7 @@ img {
 }
 .footer_bar {
 	width: 100%;
-	background-color: #033;
+	background-color: #003300;
 	border-top:1px black solid;
 	border-bottom:1px black solid;
 	height: 25px;
@@ -67,7 +67,7 @@ img {
 }
 .navbar {
 	width: 100%;
-	background-color: #033;
+	background-color:  #003300;
 	border-top:1px black solid;
 	border-bottom:1px black solid;
 	margin-top: 10px;
@@ -86,7 +86,7 @@ img {
 .navbar ul a li.link {
 	display: inline-block;
 	color:#FFF;
-	background-color:#033;
+	background-color: #003300;
 	border: 1px #033 solid;
 	padding: 5px;
 	padding-left: 10px;
@@ -110,7 +110,7 @@ li.navbar_spacer {
 	display: inline-block;
 	width: 40px;
 	padding: none;
-	background-color:#033;
+	background-color: #003300;
 	border: none;
 	height: 25px;
 	position: relative;
@@ -118,7 +118,7 @@ li.navbar_spacer {
 }
 li.navbar_spacer:hover {
 	border: none;
-	background-color:#033;
+	background-color: #003300;
 }
 
 /******************************************************************************
@@ -261,7 +261,7 @@ div#collapsed
 	position: relative;
 	top: -6px;
 }
-.repo div.repo_main span a.imagelink {
+.repo div.repo_main span .imagelink {
 	position: relative;
 	top: 8px;
 }
@@ -314,6 +314,24 @@ div#collapsed
 	color:#333;
 	font-weight: bold;
 }
+.login_form form p.checkbox {
+	float: left;
+	clear: left;
+	margin-bottom: 10px;
+	height: 30px;
+	padding:5px;
+	font-size: 1.15em;
+	color:#333;
+	position: relative;
+	top: -25px;
+}
+.login_form form p.checkbox img {
+	position: relative;
+	top: 10px;
+}
+.login_form form p.checkbox input.checkbox_input {
+	display: none;
+}
 .login_form form p {
 	float: left;
 	clear: none;
@@ -336,6 +354,16 @@ div#collapsed
 	clear: left;
 	float: left
 	font-style: italic;
+}
+.login_form form img.submit {
+	display: block;
+	height: 40px;
+	cursor: default;
+	float: left;
+	clear: left;
+}
+.login_form form img:hover {
+	cursor: pointer;
 }
 .form_spacer {
 	float: left;
@@ -370,4 +398,13 @@ input.file
 	filter:alpha(opacity: 0);
 	opacity: 0;
 	z-index: 2;
+}
+#form_warning
+{
+	display: none;
+	background-color:#FFC1C1;
+	border:#900 1px solid;
+	padding: 5px;
+	font-size: 1em;
+	font-weight: bold;
 }

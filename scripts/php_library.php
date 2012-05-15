@@ -191,4 +191,7 @@ function check_viewer_code($code,$conn)
 	else
 		return false;
 }
+function fileExists($path){
+    return (@fopen($path,"r")==true);
+}
 ?>

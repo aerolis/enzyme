@@ -16,7 +16,7 @@ $pgnum	= $_GET['pg'];
 $pgsize	= 15;
 $pgstart = $pgnum*$pgsize;
 
-$s	= "SELECT * FROM gr_jobs WHERE job_user='$user' ORDER BY job_date LIMIT $pgstart,$pgsize";
+$s	= "SELECT * FROM gr_jobs WHERE job_user='$user' ORDER BY job_date DESC LIMIT $pgstart,$pgsize";
 $s_all	= "SELECT * FROM gr_jobs WHERE job_user='$user' ORDER BY job_date";
 $r	= mysql_query($s,$conn);
 $r_all	= mysql_query($s_all,$conn);
@@ -47,10 +47,18 @@ while ($line = mysql_fetch_array($r))
 	<span>";
 	//deal with extra links
 	echo "<a class='imagelink' href='../output/" . $line['job_file'] . "/" . $line['job_file'] . ".pdb' title='Download original .pdb'><img src='../images/icons/folder.png'></a>";
-	if ($line['job_status'] == 3)
+		
+	if (fileExists("../output/" . $line['job_file'] . "/" . $line['job_file'] . ".zip"))
+	{
+		echo "<a class='imagelink' href='../output/" . $line['job_file'] . "/" . $line['job_file'] . ".zip'><img src='../images/icons/cd.png' title='Download abstracted protein'></a>";
 		echo "<a class='imagelink' href='../view/index.php?id=" . $line['job_file'] . "'><img src='../images/icons/monitor.png' title='View protein'></a>";
+	}
 	else
-		echo "<img src='../images/icons/spacer.png'>";
+	{
+		echo "<img src='../images/icons/cd_banned.png' class=\"imagelink\" title='Not ready for download'>";
+		echo "<img src='../images/icons/monitor_banned.png' class=\"imagelink\" title='Not ready for view'>";
+	}
+	
 	
 	if ($line['job_user'] == getUserId($conn))
 		echo "<a class='imagelink' href='../delete/index.php?j=" . $line['job_id'] . "'><img src='../images/icons/cancel.png' title='Delete protein'></a>";
