@@ -3,6 +3,21 @@
 include("../includes/pg_details.php");
 $pg_title = "Protein Viewer";
 
+//get the code from post/get
+if (isset($_GET['id']))
+	$id = trim($_GET['id']);
+//post data will override get data
+if (isset($_POST['id']))
+	$id = trim($_POST['id']);
+
+//check for null
+if ($id == '0' || $id == NULL)
+	unset($id);
+
+//check for valid data
+if (!check_viewer_code($id,$conn))
+	unset($id);
+
 //include header block to page
 include("../includes/header_a.php");
 
@@ -138,7 +153,7 @@ include("../includes/header_a.php");
 		OnResize();
 		
 		var urlVars = getUrlVars();
-		var id = urlVars["id"];
+		var id = <?php echo '"' . $id . '"'; ?>;
 		var path = "../output";
 		
 		Surface = new surfacedata(id, path);
@@ -164,6 +179,7 @@ include("../includes/header_a.php");
 		// Make sure the canvas height is correct
 		var height =  window.innerHeight;
 		$("#v_content").height(height-185);
+		$("#v_cover").height(height-185);
 	}
 	
 	function SurfaceLoaded()
@@ -268,14 +284,23 @@ include("../includes/header_a.php");
 
 <?php
 
-if (!isset($_GET['id']))
+if (!isset($id))
 {
-	//echo "<div class=\"v_cover\">test</div>";	
+	echo "<div class='center'><div class='login_form'><form action=\"#\" method=\"post\">";
+		echo "<h3>Please enter a valid protein viewer code to get started</h3>";
+		echo "<input type=\"text\" name=\"id\"><p style=\"color: white;\">Viewer Code</p>";
+		echo "<input type=\"submit\" value=\"View\" id=\"form_submit\" 
+				style=\"width: 100px; background-color:#CCC; color: black; border:#666 3px solid; padding: 0 0 0 0;\" />";
+	echo "</form></div></div>";
+	
+	echo "<div id=\"v_cover\"></div>";	
+	
+
 }
 ?>
 
 <div id="v_wrapper">
-		<div id="v_content">
+	<div id="v_content">
 			<div id="v_mainview" onMouseOut="MouseOut(event);" onMouseOver="MouseOver(event);">
 				<canvas id="View" onmousemove="MouseMoved(event);" onmousewheel="MouseWheel(event);"
 					onmousedown="mouseDown = true;" onmouseup="mouseDown = false;">
@@ -298,8 +323,8 @@ if (!isset($_GET['id']))
 				<ul id="SurfaceData">
 				</ul>
 			</div>
-		</div>
 	</div>
+</div>
 
 <?php
 //include footer block into webpage

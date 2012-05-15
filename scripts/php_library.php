@@ -181,4 +181,14 @@ function create_job_page($id, $webroot, $overwrite = false)
 	
 	return true;
 }
+
+function check_viewer_code($code,$conn)
+{
+	$s	= "SELECT * FROM gr_jobs WHERE job_file='$code'";
+	$r	= mysql_query($s,$conn);
+	if (mysql_num_rows($r) > 0)
+		return true;
+	else
+		return false;
+}
 ?>

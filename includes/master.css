@@ -144,14 +144,6 @@ button {
 	height: 25px;
 }
 
-
-
-
-
-
-
-
-
 /******************************************************************************
 							Styles for viewer
 *******************************************************************************/
@@ -168,13 +160,27 @@ div#v_wrapper
 }
 div#v_cover
 {
-	position:fixed;
+	position: absolute;
 	background-color:black;
-	height:100%;
+	color: white;
 	width:100%;
 	opacity:0.4;
 	filter:alpha(opacity=40);
 	z-index: 5;
+}
+.center {
+	position: absolute;
+	width: 400px;
+	height: 400px;
+	top: 50%;
+	left: 50%;
+	margin-left: -200px;
+	margin-top: -200px;
+	z-index: 10;
+}
+.center h3 {
+	color: white;
+	float: left;
 }
 div#v_content
 {
@@ -282,11 +288,15 @@ div#collapsed
 /****************************************************************************
 					Assorted forms
 ****************************************************************************/
+
 .login_form {
 	margin-left: auto;
 	margin-right: auto;
 	width: 500px;
 	padding-top: 50px;
+	z-index: 10;
+	opacity:1;
+	filter:alpha(opacity=100);
 }
 .login_form h1 {
 	padding-bottom: 15px;
