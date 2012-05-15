@@ -238,6 +238,7 @@ div#collapsed
 	max-width: 1024px;
 	margin-left: auto;
 	margin-right: auto;
+	font-size: 0.87em;
 }
 .repo div.repo_main {
 	width: 1024px;
@@ -254,7 +255,7 @@ div#collapsed
 }
 .repo div.repo_main span {
 	display: inline-block;
-	width: 150px;
+	width: 130px;
 	padding-right: 10px;
 	text-align: center;
 	position: relative;
@@ -281,7 +282,7 @@ div#collapsed
 }
 .repo div.repo_header span {
 	display: inline-block;
-	width: 150px;
+	width: 130px;
 	padding-right: 10px;
 	text-align: center;
 }

@@ -12,14 +12,17 @@ include("../includes/header_a.php");
 <?php
 
 $user	= getUserId($conn);
-$s	= "SELECT * FROM gr_jobs WHERE job_private='0' OR job_user='$user'";
+$s	= "SELECT * FROM gr_jobs WHERE job_private='0' OR job_user='$user' LIMIT 0,15";
 $r	= mysql_query($s,$conn);
+
+echo "<h2>Recent proteins</h2>";
 
 //print header
 echo	"<div class=\"repo_header\">
 			<span>Protein Name</span>
 			<span>Status</span>
 			<span>Viewer Code</span>
+			<span>Submitted</span>
 			<span>Submitted by</span>
 			<span>Organization</span>
 			<span>Files</span>
@@ -32,13 +35,18 @@ while ($line = mysql_fetch_array($r))
 	<span>" . $line['job_name'] . "</span>
 	<span>" . printJobStatus($line['job_status']) . "</span>
 	<span>" . printJobCode($line['job_status'],$line['job_file']) . "</span>
+	<span>" . date("g:ia n/j/y",strtotime($line['job_date'])) . "</span>
 	<span>" . printUserName($line['job_user'],$conn) . "</span>
 	<span>" . printUserGroup($line['job_user'],$conn) . "</span>
 	<span>";
 	//deal with extra links
 	echo "<a class='imagelink' href='../output/" . $line['job_file'] . "/" . $line['job_file'] . ".pdb' title='Download original .pdb'><img src='../images/icons/folder.png'></a>";
+	
 	if ($line['job_status'] == 3)
-		echo "<a class='imagelink' href='../view'><img src='../images/icons/monitor.png' title='View protein'></a>";
+		echo "<a class='imagelink' href='../view/index.php?id=" . $line['job_file'] . "'><img src='../images/icons/monitor.png' title='View protein'></a>";
+	else
+		echo "<img src='../images/icons/spacer.png'>";
+	
 	if ($line['job_user'] == getUserId($conn))
 		echo "<a class='imagelink' href='../delete/index.php?j=" . $line['job_id'] . "'><img src='../images/icons/cancel.png' title='Delete protein'></a>";
 	echo "</span></div>";
