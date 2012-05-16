@@ -12,7 +12,25 @@ include("../includes/header_a.php");
 <?php
 
 $user	= getUserId($conn);
-$s	= "SELECT * FROM gr_jobs WHERE job_private='0' OR job_user='$user' ORDER BY job_date DESC LIMIT 0,15";
+//find $_GET vars for sorting
+$ind	= $_GET['ind']; //index of what we are sorting
+$dir	= $_GET['dir']; //direction
+
+if (!isset($ind))
+	$sort = "ORDER BY job_date";
+else if ($ind == 1) // order by job name
+	$sort = "ORDER BY job_name";
+else if ($ind == 2) // order by status
+	$sort = "ORDER BY job_status";
+else if ($ind == 3) // user
+	$sort = "ORDER BY job_user";
+
+if ($dir == 1)
+	$sort .= " ASC";
+else
+	$sort .= " DESC";
+
+$s	= "SELECT * FROM gr_jobs WHERE job_private='0' OR job_user='$user' " . $sort . " LIMIT 0,15";
 $r	= mysql_query($s,$conn);
 
 echo "<h2>Recent proteins</h2>";
@@ -54,7 +72,7 @@ while ($line = mysql_fetch_array($r))
 	}
 	
 	if ($line['job_user'] == getUserId($conn))
-		echo "<a class='imagelink' href='../delete/index.php?j=" . $line['job_id'] . "'><img src='../images/icons/cancel.png' title='Delete protein'></a>";
+		echo "<a class='imagelink' href='../scripts/delete.php?j=" . $line['job_id'] . "'><img src='../images/icons/cancel.png' title='Delete protein'></a>";
 	echo "</span></div>";
 }
 

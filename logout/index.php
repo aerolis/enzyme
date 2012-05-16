@@ -9,12 +9,12 @@ $succ = logout($conn,$cookie_domain);
 include("../includes/header_a.php");
 
 ?>
-<div class="main_body">
+<div class="main_body" style="text-align:center;">
 <?php
 if ($succ)
-	echo "Successfully logged out.";
+	echo "<h1>Successfully logged out.</h1>";
 else
-	echo "Logout failed.";	
+	echo "<h1>Logout failed.</h1>";	
 ?>
 </div>
 

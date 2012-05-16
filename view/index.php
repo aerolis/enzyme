@@ -286,10 +286,10 @@ include("../includes/header_a.php");
 
 if (!isset($id))
 {
-	echo "<div class='center'><div class='login_form'><form action=\"#\" method=\"post\">";
+	echo "<div class='center'><div class='login_form'><form action=\"#\" method=\"post\" id=\"view_form\">";
 		echo "<h3>Please enter a valid protein viewer code to get started</h3>";
 		echo "<input type=\"text\" name=\"id\"><p style=\"color: white;\">Viewer Code</p>";
-		echo "<img class=\"submit\" src=\"../images/view.png\" onclick=\"submitForm('submit_protein',true,'');\"/>";
+		echo "<img class=\"submit\" src=\"../images/view.png\" onclick=\"submitForm('view_form',true,'');\"/>";
 	echo "</form></div></div>";
 	
 	echo "<div id=\"v_cover\"></div>";	

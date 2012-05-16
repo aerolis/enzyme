@@ -15,8 +15,28 @@ $user	= getUserId($conn);
 $pgnum	= $_GET['pg'];
 $pgsize	= 15;
 $pgstart = $pgnum*$pgsize;
+//find $_GET vars for sorting
+$ind	= $_GET['ind']; //index of what we are sorting
+$dir	= $_GET['dir']; //direction
 
-$s	= "SELECT * FROM gr_jobs WHERE job_user='$user' ORDER BY job_date DESC LIMIT $pgstart,$pgsize";
+if (!isset($ind))
+	$sort = "ORDER BY job_date";
+else if ($ind == 1) // order by job name
+	$sort = "ORDER BY job_name";
+else if ($ind == 2) // order by status
+	$sort = "ORDER BY job_status";
+else if ($ind == 3) // user
+	$sort = "ORDER BY job_user";
+
+if ($dir == 1)
+	$sort .= " ASC";
+else
+{
+	$sort .= " DESC";
+	$dir = 0;
+}
+
+$s	= "SELECT * FROM gr_jobs WHERE job_user='$user' " . $sort . " LIMIT $pgstart,$pgsize";
 $s_all	= "SELECT * FROM gr_jobs WHERE job_user='$user' ORDER BY job_date";
 $r	= mysql_query($s,$conn);
 $r_all	= mysql_query($s_all,$conn);
@@ -24,15 +44,16 @@ $r_all	= mysql_query($s_all,$conn);
 echo "<h2>My submitted proteins</h2>";
 
 //print header
-echo	"<div class=\"repo_header\">
-			<span>Protein Name</span>
-			<span>Status</span>
-			<span>Viewer Code</span>
-			<span>Submitted</span>
-			<span>Submitted by</span>
-			<span>Organization</span>
-			<span>Files</span>
-			</div>";
+echo	"<div class=\"repo_header\">";
+echo	"<span><a href=\"index.php?ind=1&dir=".!$dir."\">Protein Name</a></span>";
+echo	"<span><a href=\"index.php?ind=2&dir=".!$dir."\">Status</a></span>";
+echo	"<span>Viewer Code</span>";
+echo	"<span><a href=\"index.php?dir=".!$dir."\">Submitted</a></span>";
+echo	"<span><a href=\"index.php?ind=3&dir=".!$dir."\">Submitted by</a></span>";
+echo	"<span>Organization</span>";
+echo	"<span>Files</span>
+		</div>";
+
 
 //print proteins
 while ($line = mysql_fetch_array($r))
@@ -59,10 +80,11 @@ while ($line = mysql_fetch_array($r))
 		echo "<img src='../images/icons/monitor_banned.png' class=\"imagelink\" title='Not ready for view'>";
 	}
 	
-	
+
 	if ($line['job_user'] == getUserId($conn))
-		echo "<a class='imagelink' href='../delete/index.php?j=" . $line['job_id'] . "'><img src='../images/icons/cancel.png' title='Delete protein'></a>";
-	echo "</span></div>";}
+		echo "<a class='imagelink' href='../scripts/delete.php?j=" . $line['job_id'] . "'><img src='../images/icons/cancel.png' title='Delete protein'></a>";
+	echo "</span></div>";
+}
 
 echo '</div>';
 

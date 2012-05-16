@@ -86,7 +86,7 @@ if ((($_FILES["file"]["type"] == "application/octet-stream")) && ($_FILES["file"
 					viewer to find.
 			*******************************************************************/
 			
-			header("Location: " . $webroot . "/status");
+			header("Location: " . $webroot . "/submitted/index.php?code=" . $code);
     	}
   	}
 }

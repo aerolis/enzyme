@@ -86,8 +86,9 @@ function getUserId($conn)
 			$row	= mysql_fetch_row($result_login);
 			return $row[0];
 		}
-		return 0;
+		return -1;
 	}
+	return -1;
 }
 function printUserName($id,$conn)
 {
@@ -98,6 +99,21 @@ function printUserName($id,$conn)
 		while ($line = mysql_fetch_array($r))
 		{
 			$str = $line['user_fname'] . " " . $line['user_lname'];
+			return $str;
+		}
+	}
+	else
+		return "Anonymous";
+}
+function printUserEmail($id,$conn)
+{
+	if ($id > 0)
+	{
+		$s	= "SELECT * FROM gr_users WHERE user_id='$id'";
+		$r	= mysql_query($s,$conn);
+		while ($line = mysql_fetch_array($r))
+		{
+			$str = $line['user_email'];
 			return $str;
 		}
 	}
@@ -181,13 +197,30 @@ function create_job_page($id, $webroot, $overwrite = false)
 	
 	return true;
 }
-
+function isPublic($code,$conn)
+{
+	$s	= "SELECT * FROM gr_jobs WHERE job_file='$code'";
+	$r	= mysql_query($s,$conn);
+	if (mysql_num_rows($r) > 0)
+	{
+		$job	= mysql_fetch_array($r);
+		return !$job['job_private'];
+	}
+	else
+		return -1;
+}
 function check_viewer_code($code,$conn)
 {
 	$s	= "SELECT * FROM gr_jobs WHERE job_file='$code'";
 	$r	= mysql_query($s,$conn);
 	if (mysql_num_rows($r) > 0)
-		return true;
+	{
+		$job = mysql_fetch_array($r);
+		if ($job['job_status'] == 3)
+			return true;
+		else
+			return false;
+	}
 	else
 		return false;
 }
