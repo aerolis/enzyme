@@ -10,11 +10,11 @@
 }
 
 
-var ply_decal = function(raw_decal, vertices, indices, image, filename)
+var ply_decal = function(raw_decal, path, vertices, indices)
 {
-	
+	this.filename = raw_decal.texfilename;
 	this.TriangleIndices = [];
-	this.texfilename = raw_decal.texfilename;
+	this.path = path;
 	
 	var Index_1 = -1;
 	var Index_2 = -1;
@@ -87,7 +87,7 @@ var ply_decal = function(raw_decal, vertices, indices, image, filename)
 	this.Texture = null;
 	for(var i = 0; i < ply_decal.textureCache.length; i++)
 	{
-		if(ply_decal.textureCache[i].filename == filename)
+		if(ply_decal.textureCache[i].filename == this.filename)
 		{
 			this.Texture = ply_decal.textureCache[i];
 			break;
@@ -119,8 +119,8 @@ var ply_decal = function(raw_decal, vertices, indices, image, filename)
 			//Debug.Trace("Image Loaded: " + Texture.image.src);
 			checkGLError();		
 		}
-		this.Texture.image.src = "data:image/png;base64," + base64Encode(image);
-		this.Texture.filename = filename;
+		this.Texture.image.src = this.path + this.filename;
+		this.Texture.filename = this.filename;
 		ply_decal.textureCache.push(this.Texture);
 	}
 	

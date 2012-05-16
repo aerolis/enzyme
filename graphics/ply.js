@@ -1,8 +1,11 @@
 ﻿var ply = {};
-ply.file = function(zip, filename, i_AmbientOcclusion, i_DecalLists)
+ply.file = function(path, //zip,
+					filename, 
+					i_AmbientOcclusion, 
+					i_DecalLists)
 {
-	this.zip = zip;
-	this.file = zip.getFile(filename).Data;
+	//this.zip = zip;
+	this.path = path;
 	this.filename = filename;
 	this.ambientocclusion = i_AmbientOcclusion;
 	if(i_DecalLists != null)
@@ -30,9 +33,45 @@ ply.file = function(zip, filename, i_AmbientOcclusion, i_DecalLists)
 	}
 
 	  
-	this.parseFile = function()
+	this.load = function()
 	{
-		var reader = new BinaryReader(this.file);
+		Debug.Trace("Loading " + this.filename);
+	
+		var xhr = new XMLHttpRequest();
+		var file = this;
+		xhr.onreadystatechange = function()
+		{
+			Debug.Trace("XMLHttpRequest Ready State Changed");
+			if (xhr.readyState == xhr.DONE) 
+			{
+				Debug.Trace("XMLHttpRequest Ready State Done");
+
+				if ((xhr.status == 200 || xhr.status == 0) && xhr.response) // MWA - for some reason local tests return 0 on ready 
+				{
+					Debug.Trace("XMLHttpRequest Status OK");
+					file.parsefile(xhr.response);
+				} 
+				else 
+				{
+					throw 1;
+				}
+			}
+		}
+		
+		// Open the request for the provided url
+		xhr.open("GET", this.path + this.filename, true); 
+		// Set the responseType to 'arraybuffer' for ArrayBuffer response
+		xhr.responseType = "arraybuffer";
+		
+		xhr.send();
+		
+		//this.parsefile(zip.getFile(filename).Data);
+	}
+	
+	this.parsefile = function(file)
+	{
+		Debug.Trace("Parsing PLY File");
+		var reader = new BinaryReader(file);
 		var l = this.nextLabel(reader);
 		
 		while(l != "end_header")
@@ -61,8 +100,8 @@ ply.file = function(zip, filename, i_AmbientOcclusion, i_DecalLists)
 			var decallist = [];
 			decallist.type = raw_decallist.type;
 			
-			for(var k = 0; k < raw_decallist.length; k++)
-				decallist.push(new ply_decal(raw_decallist[k], this.vertices, this.indices, this.zip.getFile(raw_decallist[k].texfilename).Data, raw_decallist[k].texfilename));
+			//for(var k = 0; k < raw_decallist.length; k++)
+			//	decallist.push(new ply_decal(raw_decallist[k], this.path, this.vertices, this.indices));
 						
 			this.decallists.push(decallist);
 		}

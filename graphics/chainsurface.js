@@ -5,6 +5,7 @@
 	this.abstract_surfacefile = null;
 	this.orig_surfacefilename = "";
 	this.orig_surfacefile = null;
+	this.enabled = true;
 
 	this.abstract_charge = [];
 	this.abstract_ambient_occlusion = [];
@@ -14,16 +15,36 @@
 	this.orig_ambient_occlusion = [];
 	this.orig_hydropathy = [];
 
+	this.draw = function(AbstractToggle, i_EnzymeShaderProgram, i_DecalShaderProgram)
+	{
+		if(this.enabled)
+		{
+			if(AbstractToggle)
+			{
+				if(this.abstract_surfacefile != null)
+					this.abstract_surfacefile.draw(i_EnzymeShaderProgram, i_DecalShaderProgram);
+			}
+			else
+			{
+				if(this.orig_surfacefile != null)
+					this.orig_surfacefile.draw(i_EnzymeShaderProgram, i_DecalShaderProgram);
+			}
+		}
+	}
+	
+	Debug.Trace("Parsing Chain Surface");
 	for(var i = 0; i < xml.attributes.length; i++)
 	{
 		var attribute = xml.attributes[i];
 		if(attribute.name == "abstract_surfacefile")
 		{
 			this.abstract_surfacefilename = attribute.value;
+			Debug.Trace("Abstract Surface Filename: " + this.abstract_surfacefilename);
 		}
 		else if(attribute.name == "orig_surfacefile")
 		{
 			this.orig_surfacefilename = attribute.value;
+			Debug.Trace("Original Surface Filename: " + this.orig_surfacefilename);
 		}
 	}
 
@@ -75,6 +96,8 @@
 			throw 5;
 		}
 	}
+	
+	
 }
 
 function decallist(xml)
