@@ -42,6 +42,7 @@ include("../includes/header_a.php");
 <script src="../graphics/glMatrix.js"></script>
 
 <script src="../scripts/toggle.js"></script>
+<script src="../scripts/progressbar.js"></script>
 
 <script>
 	String.prototype.startsWith = function(str) 
@@ -201,6 +202,14 @@ if (!isset($id))
 
 }
 ?>
+
+<!--<div class="center" style='z-index: 4;'>
+	<div id="progressbar">
+		<div id="percent">
+        &nbsp;
+		</div>
+	</div>
+</div>-->
 
 <div id="v_wrapper">
 		<div id="v_content">

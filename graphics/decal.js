@@ -99,9 +99,13 @@ var ply_decal = function(raw_decal, path, vertices, indices)
 		// Download the texture image
 		this.Texture = gl.createTexture();
 		this.Texture.image = new Image();
+		
+		Debug.Trace("Loading Image: " + this.filename);
+		
 		var Texture = this.Texture;
 		this.Texture.image.onload = function()
 		{
+			Debug.Trace("Image Loaded: " + Texture.filename);
 			checkGLError();
 			gl.bindTexture(gl.TEXTURE_2D, Texture);
 			checkGLError();
@@ -117,10 +121,11 @@ var ply_decal = function(raw_decal, path, vertices, indices)
 			checkGLError();
 			gl.bindTexture(gl.TEXTURE_2D, null);
 			//Debug.Trace("Image Loaded: " + Texture.image.src);
-			checkGLError();		
+			checkGLError();
 		}
 		this.Texture.image.src = this.path + this.filename;
 		this.Texture.filename = this.filename;
+		this.Texture.src = this.path + this.filename;
 		ply_decal.textureCache.push(this.Texture);
 	}
 	

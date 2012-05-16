@@ -12,6 +12,7 @@
 		Debug.Trace("Loading " + this.filename);
 		var sd = this;
 		var xhr = new XMLHttpRequest();
+		updateProgressBar(0);
 		xhr.onreadystatechange = function()
 		{
 			Debug.Trace("XMLHttpRequest Ready State Changed");
@@ -36,7 +37,7 @@
 						var node = xml.childNodes[i];
 						if(node instanceof Element && node.nodeName == "surfacedata")
 						{
-							sd.parseSurfaceData(node);
+							sd.parseSurfaceData(node, success);
 						}
 						else if(node instanceof Text)
 						{
@@ -48,8 +49,6 @@
 						}
 					}
 					
-					if(success != null)
-						success();
 			/*},
 			failure
 			);*/
@@ -70,7 +69,7 @@
 	}
 	
 	this.chainsurfaces = [];
-	this.parseSurfaceData = function(xml)
+	this.parseSurfaceData = function(xml, success)
 	{
 		Debug.Trace("Parsing Surface Data");
 		this.numchains = 0;
@@ -84,7 +83,7 @@
 			}
 		}
 
-	
+		this.CScount = 0;
 		for(var i = 0; i < xml.childNodes.length; i++)
 		{
 			var node = xml.childNodes[i];
@@ -103,7 +102,8 @@
 							cs.abstract_ambient_occlusion, 
 							cs.decallists
 							);
-						cs.abstract_surfacefile.load();
+						this.CScount++;
+						//cs.abstract_surfacefile.load();
 					}
 					if(cs.orig_surfacefilename != "")
 					{
@@ -112,7 +112,8 @@
 							cs.orig_surfacefilename, 
 							cs.orig_ambient_occlusion
 							);
-						cs.orig_surfacefile.load();
+						this.CScount++;
+						//cs.orig_surfacefile.load();
 					}
 					
 					this.chainsurfaces.push(cs);
@@ -131,5 +132,46 @@
 				throw 3;
 			}
 		}
+		
+		this.loadNextCS(success);
+	}
+	
+	this.CScountLoaded = 0;
+	this.loadNextCS = function(success)
+	{
+		var cont = false;
+		for(var i = 0; i < this.chainsurfaces.length; i++)
+		{
+			var cs = this.chainsurfaces[i];
+			if(cs.abstract_surfacefile != null && !cs.abstract_surfacefile.loaded)
+			{
+				var sd = this;
+				cs.abstract_surfacefile.load(
+					function()
+					{
+						sd.loadNextCS(success);
+					});
+				cont = true;
+				this.CScountLoaded++;
+				updateProgressBar(this.CScountLoaded / this.CScount * 100.0);
+				break;
+			}
+			else if(cs.orig_surfacefile != null && !cs.orig_surfacefile.loaded)
+			{
+				var sd = this;
+				cs.orig_surfacefile.load(
+					function()
+					{
+						sd.loadNextCS(success);
+					});
+				cont = true;
+				this.CScountLoaded++;
+				updateProgressBar(this.CScountLoaded / this.CScount * 100.0);
+				break;
+			}
+		}
+		
+		if(!cont && success != null)
+			success();
 	}
 }

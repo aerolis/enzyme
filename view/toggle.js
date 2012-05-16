@@ -4,14 +4,14 @@
 		Debug.Trace("Toggle Abstract View: "+!AbstractToggle);
 		if(AbstractToggle)
 		{
-			AbstractToggle = true;
+			AbstractToggle = false;
 			$("#AbstractToggle").removeClass("view_visible");
 			$("#AbstractToggle").addClass("view_invisible");
 
 		}
 		else
 		{
-			AbstractToggle = false;
+			AbstractToggle = true;
 			$("#AbstractToggle").removeClass("view_invisible");
 			$("#AbstractToggle").addClass("view_visible");
 		}
