@@ -158,6 +158,20 @@ button {
 							Styles for viewer
 *******************************************************************************/
 
+#progressbar
+{
+	background-color:#FFFFFF;
+	width:400px;
+	height:20px;
+}
+
+#percent
+{
+	width:50%;
+	height:100%;
+	background-color:#FF0000;
+}
+
 v_header
 {
 	background-color:#141E1E;

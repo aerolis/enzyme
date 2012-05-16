@@ -4,6 +4,7 @@ ply.file = function(path, //zip,
 					i_AmbientOcclusion, 
 					i_DecalLists)
 {
+	this.loaded = false;
 	//this.zip = zip;
 	this.path = path;
 	this.filename = filename;
@@ -33,7 +34,7 @@ ply.file = function(path, //zip,
 	}
 
 	  
-	this.load = function()
+	this.load = function(success)
 	{
 		Debug.Trace("Loading " + this.filename);
 	
@@ -50,6 +51,9 @@ ply.file = function(path, //zip,
 				{
 					Debug.Trace("XMLHttpRequest Status OK");
 					file.parsefile(xhr.response);
+					file.loaded = true;
+					if(success != null)
+						success();
 				} 
 				else 
 				{
@@ -100,8 +104,8 @@ ply.file = function(path, //zip,
 			var decallist = [];
 			decallist.type = raw_decallist.type;
 			
-			//for(var k = 0; k < raw_decallist.length; k++)
-			//	decallist.push(new ply_decal(raw_decallist[k], this.path, this.vertices, this.indices));
+			for(var k = 0; k < raw_decallist.length; k++)
+				decallist.push(new ply_decal(raw_decallist[k], this.path, this.vertices, this.indices));
 						
 			this.decallists.push(decallist);
 		}
