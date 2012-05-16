@@ -198,6 +198,33 @@ canvas#View
 	height:100%;
 	display:inline;
 }
+
+ul#SurfaceData
+{
+	list-style:none;
+}
+
+div#chain_selector
+{
+	display:inline-block;
+	vertical-align: top;
+	width:300px;
+}
+
+.chainsurface
+{
+	height:50px;
+	width:200px;
+	cursor:pointer;
+}
+
+div#sticker_selector
+{
+	display:inline-block;
+	vertical-align: top;
+}
+
+
 div#viewcontrols
 {
 	background-color:rgba(255, 255, 255, 0.1);
@@ -208,6 +235,7 @@ div#viewcontrols
 	width:100%;
 	border-top:1px #FFFFFF solid;
 }
+
 div.viewcontrol 
 {
 	display:inline-block;
@@ -223,6 +251,23 @@ div#collapsed
 {
 	background-image:url('../content/images/appbar.arrow.collapsed.png');
 	display:none;
+}
+
+.view_toggle
+{
+	height:50px;
+	width:200px;
+	cursor:pointer;
+}
+
+.view_visible
+{
+	background-color:#009000;
+}
+
+.view_invisible
+{
+	background-color:#900000;
 }
 
 /****************************************************************************

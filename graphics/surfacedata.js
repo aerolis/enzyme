@@ -1,46 +1,78 @@
 ﻿function surfacedata(id, path, i_Callback)
 {
-	this.path = path + "/" + id + "/";
+	this.path = path + "/" + id + "/" + id + "_uncompressed/";
 	this.id = id;
-	this.filename = id + "_uncompressed.zip";
-	this.zip = new Zip(this.path + this.filename);
+	this.filename = "decal-" + id + ".xml";
+	
+	//this.filename = id + "_uncompressed.zip";
+	//this.zip = new Zip(this.path + this.filename);
 	
 	this.load = function(success, failure)
 	{
+		Debug.Trace("Loading " + this.filename);
 		var sd = this;
-		sd.zip.load(
-		function()
+		var xhr = new XMLHttpRequest();
+		xhr.onreadystatechange = function()
 		{
-			var file = DataViewToString(sd.zip.getFile("decal-" + sd.id + ".xml").Data);
-			var xml = StringtoXML(file);
-			for(var i = 0; i < xml.childNodes.length; i++)
+			Debug.Trace("XMLHttpRequest Ready State Changed");
+			if (xhr.readyState == xhr.DONE) 
 			{
-				var node = xml.childNodes[i];
-				if(node instanceof Element && node.nodeName == "surfacedata")
+				Debug.Trace("XMLHttpRequest Ready State Done");
+
+				if ((xhr.status == 200 || xhr.status == 0) && xhr.responseXML) // MWA - for some reason local tests return 0 on ready 
 				{
-					sd.parseSurfaceData(node);
-				}
-				else if(node instanceof Text)
+					Debug.Trace("XMLHttpRequest Status OK");
+					var xml = xhr.responseXML;
+					
+		/*sd.zip.load(
+			function()
+			{
+				var file = DataViewToString(sd.zip.getFile("decal-" + sd.id + ".xml").Data);
+				var xml = StringtoXML(file);
+*/
+					
+					for(var i = 0; i < xml.childNodes.length; i++)
+					{
+						var node = xml.childNodes[i];
+						if(node instanceof Element && node.nodeName == "surfacedata")
+						{
+							sd.parseSurfaceData(node);
+						}
+						else if(node instanceof Text)
+						{
+							// Ignore Text
+						}
+						else
+						{
+							throw 2;
+						}
+					}
+					
+					if(success != null)
+						success();
+			/*},
+			failure
+			);*/
+
+				} 
+				else 
 				{
-					// Ignore Text
+					throw 1;
 				}
-				else
-				{
-					throw 2;
-				}
+			
 			}
 			
-			if(success != null)
-				success();
-		},
-		failure
-		);
+		}
+		
+		// Open the request for the provided url
+		xhr.open("GET", this.path + this.filename, true);  
+		xhr.send();
 	}
 	
-
 	this.chainsurfaces = [];
 	this.parseSurfaceData = function(xml)
 	{
+		Debug.Trace("Parsing Surface Data");
 		this.numchains = 0;
 		for(var i = 0; i < xml.attributes.length; i++)
 		{
@@ -48,6 +80,7 @@
 			if(attribute.name == "numchains")
 			{
 				this.numchains = parseInt(attribute.value, 10);
+				Debug.Trace("SurfaceData has "+this.numchains+" Chain Surfaces");
 			}
 		}
 
@@ -65,21 +98,21 @@
 					if(cs.abstract_surfacefilename != "")
 					{
 						cs.abstract_surfacefile = new ply.file(
-							this.zip, 
+							this.path,//this.zip,
 							cs.abstract_surfacefilename, 
 							cs.abstract_ambient_occlusion, 
 							cs.decallists
 							);
-						cs.abstract_surfacefile.parseFile();
+						cs.abstract_surfacefile.load();
 					}
 					if(cs.orig_surfacefilename != "")
 					{
 						cs.orig_surfacefile = new ply.file(
-							this.zip, 
+							this.path,//this.zip,
 							cs.orig_surfacefilename, 
 							cs.orig_ambient_occlusion
 							);
-						cs.orig_surfacefile.parseFile();
+						cs.orig_surfacefile.load();
 					}
 					
 					this.chainsurfaces.push(cs);

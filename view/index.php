@@ -26,76 +26,9 @@ include("../includes/header_a.php");
 <script src="../graphics/Helper.js"></script>
 <script src="../graphics/glMatrix.js"></script>
 
+<script src="toggle.js"></script>
+
 <script>
-
-	var HBondsStickersVisible = false;
-	function ToggleHBondsStickersVisible()
-	{
-		if(HBondsStickersVisible)
-		{
-			$("#ToggleHBondsStickers").removeClass("visible");
-			$("#ToggleHBondsStickers").addClass("invisible");
-			HBondsStickersVisible = false;
-		}
-		else
-		{
-			$("#ToggleHBondsStickers").removeClass("invisible");
-			$("#ToggleHBondsStickers").addClass("visible");
-			HBondsStickersVisible = true;
-		}
-	}
-
-	var DetectedPocketsStickersVisible = false;
-	function ToggleDetectedPocketsStickersVisible()
-	{
-		if(DetectedPocketsStickersVisible)
-		{
-			$("#ToggleDetectedPocketsStickers").removeClass("visible");
-			$("#ToggleDetectedPocketsStickers").addClass("invisible");
-			DetectedPocketsStickersVisible = false;
-		}
-		else
-		{
-			$("#ToggleDetectedPocketsStickers").removeClass("invisible");
-			$("#ToggleDetectedPocketsStickers").addClass("visible");
-			DetectedPocketsStickersVisible = true;
-		}
-	}
-
-	var InterfacesStickersVisible = false;
-	function ToggleInterfacesStickersVisible()
-	{
-		if(InterfacesStickersVisible)
-		{
-			$("#ToggleInterfacesStickers").removeClass("visible");
-			$("#ToggleInterfacesStickers").addClass("invisible");
-			InterfacesStickersVisible = false;
-		}
-		else
-		{
-			$("#ToggleInterfacesStickers").removeClass("invisible");
-			$("#ToggleInterfacesStickers").addClass("visible");
-			InterfacesStickersVisible = true;
-		}
-	}
-
-	var PeakBowlStickersVisible = true;
-	function TogglePeakBowlStickersVisible()
-	{
-		if(PeakBowlStickersVisible)
-		{
-			$("#TogglePeakBowlStickers").removeClass("visible");
-			$("#TogglePeakBowlStickers").addClass("invisible");
-			PeakBowlStickersVisible = false;
-		}
-		else
-		{
-			$("#TogglePeakBowlStickers").removeClass("invisible");
-			$("#TogglePeakBowlStickers").addClass("visible");
-			PeakBowlStickersVisible = true;
-		}
-	}
-
 	String.prototype.startsWith = function(str) 
 	{return (this.match("^"+str)==str)}
 
@@ -117,7 +50,6 @@ include("../includes/header_a.php");
 	var DecalShader = {};
 	var Time = 0;
 	var Surface;
-	var Selected;
 	
 	/******************************************************/
 	/* WindowLoaded
@@ -166,38 +98,6 @@ include("../includes/header_a.php");
 		$("#v_content").height(height-185);
 	}
 	
-	function SurfaceLoaded()
-	{
-		var list = document.getElementById("SurfaceData");
-		
-		for(var i = 0; i < Surface.chainsurfaces.length; i++)
-		{
-			var cs = Surface.chainsurfaces[i];
-			var new_cs = document.createElement('li');
-			new_cs.innerHTML = "<h4> ChainSurface </h4>";
-			var new_ul = document.createElement('ul');
-			if(cs.orig_surfacefile != null)
-			{
-				var new_file = document.createElement('li');
-				new_file.innerText = "Original: " + cs.orig_surfacefilename;
-				new_file.setAttribute("onclick", "Selected = Surface.chainsurfaces["+i+"].orig_surfacefile;");
-				new_file.setAttribute("style", "cursor:pointer;color:blue;");
-				new_ul.appendChild(new_file);
-			}
-			
-			if(cs.abstract_surfacefile != null)
-			{
-				var new_file = document.createElement('li');
-				new_file.innerText = "Abstract: " + cs.abstract_surfacefilename;
-				new_file.setAttribute("onclick", "Selected = Surface.chainsurfaces["+i+"].abstract_surfacefile;");
-				new_file.setAttribute("style", "cursor:pointer;color:blue;");
-				new_ul.appendChild(new_file);
-			}
-	
-			new_cs.appendChild(new_ul);
-			list.appendChild(new_cs);
-		}
-	}
 	
 	/******************************************************/
 	/* Loop
@@ -260,8 +160,8 @@ include("../includes/header_a.php");
 		mat4.lookAt(CameraPos, LookAt, Up, gl.vMatrix);	
 		mat4.identity(gl.mvMatrix);
 		
-		if(Selected != null)
-			Selected.draw(EnzymeShader.Program, DecalShader.Program);
+		for(var i = 0; i < Surface.chainsurfaces.length; i++)
+		 	Surface.chainsurfaces[i].draw(AbstractToggle, EnzymeShader.Program, DecalShader.Program);
 	}	
 </script>
 
@@ -276,27 +176,33 @@ if (!isset($_GET['id']))
 
 <div id="v_wrapper">
 		<div id="v_content">
+			<div id="chain_selector">
+				<div id="AbstractToggle" class="view_toggle view_visible" onclick="toggleAbstractView();">
+					<h2>Abstracted View</h2>
+				</div>
+				<h3>Surface Data</h3>
+				<ul id="SurfaceData">
+				</ul>
+			</div>
 			<div id="v_mainview" onMouseOut="MouseOut(event);" onMouseOver="MouseOver(event);">
 				<canvas id="View" onmousemove="MouseMoved(event);" onmousewheel="MouseWheel(event);"
 					onmousedown="mouseDown = true;" onmouseup="mouseDown = false;">
 				</canvas>
 			</div>
-			<div id="Selector" style="display:inline-block; vertical-align: top;">
-				<div class="toggle invisible" id="ToggleHBondsStickers" onClick="ToggleHBondsStickersVisible();"
+			<div id="sticker_selector">
+				<div class="view_toggle view_invisible" id="ToggleHBondsStickers" onClick="ToggleHBondsStickersVisible();"
 				title="Hydrogen bond stickers are placed on the surface in areas that are close to one or more atoms that could form an external hydrogen bond.">
 				H-Bonds</div>
-				<div class="toggle invisible" id="ToggleDetectedPocketsStickers" onClick="ToggleDetectedPocketsStickersVisible();"
+				<div class="view_toggle view_invisible" id="ToggleDetectedPocketsStickers" onClick="ToggleDetectedPocketsStickersVisible();"
 				title="Detected Pockets indicate regions of the surface that resemble binding pockets, according to a variant of the Ligsite pocket detector.">
 				Detected Pockets</div>
-				<div class="toggle invisible" id="ToggleInterfacesStickers" onClick="ToggleInterfacesStickersVisible();"
+				<div class="view_toggle view_invisible" id="ToggleInterfacesStickers" onClick="ToggleInterfacesStickersVisible();"
 				title="Interfaces indicate regions of the surface in close proximity to another chain.">
 				Interferences</div>
-				<div class="toggle visible" id="TogglePeakBowlStickers" onClick="TogglePeakBowlStickersVisible();"
+				<div class="view_toggle view_visible" id="TogglePeakBowlStickers" onClick="TogglePeakBowlStickersVisible();"
 				 title="peak/bowl stickers display as an 'X' or 'O', respectively, points where significant peaks or bumps in the original solvent excluded surface were removed.">
 				 Peaks/Bowls</div>
-				<h3>Surface Data</h3>
-				<ul id="SurfaceData">
-				</ul>
+				
 			</div>
 		</div>
 	</div>
