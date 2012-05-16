@@ -225,6 +225,7 @@ div#chain_selector
 	display:inline-block;
 	vertical-align: top;
 	width:300px;
+	color: white;
 }
 
 .chainsurface
@@ -271,19 +272,18 @@ div#collapsed
 
 .view_toggle
 {
-	height:50px;
-	width:200px;
+	height:30px;
+	width:250px;
+	padding: 10px;
+	color: white;
+	font-weight: bold;
+}
+.view_toggle img {
+	position: relative;
+	top: -5px;
+	float: left;
+	clear: left;
 	cursor:pointer;
-}
-
-.view_visible
-{
-	background-color:#009000;
-}
-
-.view_invisible
-{
-	background-color:#900000;
 }
 
 /****************************************************************************
@@ -309,6 +309,7 @@ div#collapsed
 	background-color:#CCC;
 }
 .repo div.repo_main span {
+	margin: 0 0 0 0;
 	display: inline-block;
 	width: 130px;
 	padding-right: 10px;
@@ -340,7 +341,7 @@ div#collapsed
 	width: 130px;
 	padding-right: 10px;
 	text-align: center;
-	margin-right: 4px;
+	margin-right: 2px;
 }
 .repo div.repo_header span a {
 	color: black;
@@ -466,4 +467,60 @@ input.file
 	padding: 5px;
 	font-size: 1em;
 	font-weight: bold;
+}
+.viewer_form
+{
+	width: 250px;
+	margin-top: 25px;
+	margin-left: 15px;
+}
+.viewer_form form input {
+	float: left;
+	clear: left;
+	width: 150px;
+	padding:5px;
+	font-size: 1.15em;
+	color:#333;
+	font-weight: bold;
+}
+.viewer_form form p {
+	color: white;
+	font-weight: bold;
+	float: left;
+	clear: none;
+	padding-left: 8px;
+}
+.viewer_form form img {
+	float: left;
+	clear: left;
+}
+.viewer_form p {
+	display: block;
+	height: 20px;
+	color: white;
+	font-weight: bold;
+	float: left;
+	clear: none;
+	margin: 0 0 0 0;
+}
+.viewer_form h3 {
+	display: block;
+	height: 20px;
+	width: 80px;
+	color: white;
+	font-weight: bold;
+	float: left;
+	clear: left;
+	margin: 0 0 0 0;
+}
+.viewer_form h2 {
+	font-size: 1.2em;
+	width: 150px;
+	display: block;
+	height: 25px;
+	color: white;
+	font-weight: bold;
+	float: left;
+	clear: left;
+	margin: 0 0 0 0;
 }

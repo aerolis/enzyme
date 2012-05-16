@@ -111,9 +111,29 @@ function toggleyesno(id)
 	box[0].setAttribute('yesno',!state);
 	//flip the image
 	if (box[0].getAttribute('yesno') == 'true')
-		box[0].src	= box[0].src.replace("no","yes");
+		box[0].src	= box[0].src.replace("no_","yes_");
 	else
-		box[0].src	= box[0].src.replace("yes","no");
+		box[0].src	= box[0].src.replace("yes_","no_");
+}
+function toggleonoff(id)
+{
+	//initialize if it doesn't have a dom property already
+	var box = $('#'+id);
+	if (!box[0].hasAttribute('yesno'))
+		box[0].setAttribute('yesno',false);
+		
+	//flip the value
+	var state	= false;
+	if (box[0].getAttribute('yesno') != 'false')
+		state = true;
+		
+	box[0].setAttribute('yesno',!state);
+	//flip the image
+	if (box[0].getAttribute('yesno') == 'true')
+		box[0].src	= box[0].src.replace("off_","on_");
+	else
+		box[0].src	= box[0].src.replace("on_","off_");
+	return !state;
 }
 
 var W3CDOM = (document.createElement && document.getElementsByTagName);

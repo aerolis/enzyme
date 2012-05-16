@@ -41,7 +41,7 @@ include("../includes/header_a.php");
 <script src="../graphics/Helper.js"></script>
 <script src="../graphics/glMatrix.js"></script>
 
-<script src="toggle.js"></script>
+<script src="../scripts/toggle.js"></script>
 
 <script>
 	String.prototype.startsWith = function(str) 
@@ -82,6 +82,7 @@ include("../includes/header_a.php");
 		
 		// Attach event listeners
 		window.addEventListener("resize", OnResize, false);
+		window.addEventListener('DOMMouseScroll', MouseWheel, false);
 		OnResize();
 		
 		var urlVars = getUrlVars();
@@ -109,9 +110,12 @@ include("../includes/header_a.php");
 	function OnResize()
 	{
 		// Make sure the canvas height is correct
-		var height =  window.innerHeight;
+		var height 	= window.innerHeight;
+		var width	= window.innerWidth;
 		$("#v_content").height(height-185);
 		$("#v_cover").height(height-185);
+		$("#v_mainview").width(Math.max(0,width-650));
+		$("#View").width(Math.max(0,width-650));
 	}
 	
 	
@@ -201,32 +205,60 @@ if (!isset($id))
 <div id="v_wrapper">
 		<div id="v_content">
 			<div id="chain_selector">
-				<div id="AbstractToggle" class="view_toggle view_visible" onclick="toggleAbstractView();">
-					<h2>Abstracted View</h2>
+            
+				<div class="view_toggle">
+                	<img src="../images/icons/on_120_30.png" id="AbstractToggle" onClick="ToggleAbstractView();"/>
+					Abstracted View
 				</div>
-				<h3>Surface Data</h3>
-				<ul id="SurfaceData">
-				</ul>
+			
+            	<h3>Chain Surfaces</h3>
+				<div id="SurfaceData">
+				</div>
 			</div>
+            
 			<div id="v_mainview" onMouseOut="MouseOut(event);" onMouseOver="MouseOver(event);">
 				<canvas id="View" onmousemove="MouseMoved(event);" onmousewheel="MouseWheel(event);"
 					onmousedown="mouseDown = true;" onmouseup="mouseDown = false;">
 				</canvas>
 			</div>
+            
 			<div id="sticker_selector">
-				<div class="view_toggle view_invisible" id="ToggleHBondsStickers" onClick="ToggleHBondsStickersVisible();"
-				title="Hydrogen bond stickers are placed on the surface in areas that are close to one or more atoms that could form an external hydrogen bond.">
-				H-Bonds</div>
-				<div class="view_toggle view_invisible" id="ToggleDetectedPocketsStickers" onClick="ToggleDetectedPocketsStickersVisible();"
-				title="Detected Pockets indicate regions of the surface that resemble binding pockets, according to a variant of the Ligsite pocket detector.">
-				Detected Pockets</div>
-				<div class="view_toggle view_invisible" id="ToggleInterfacesStickers" onClick="ToggleInterfacesStickersVisible();"
-				title="Interfaces indicate regions of the surface in close proximity to another chain.">
-				Interferences</div>
-				<div class="view_toggle view_visible" id="TogglePeakBowlStickers" onClick="TogglePeakBowlStickersVisible();"
-				 title="peak/bowl stickers display as an 'X' or 'O', respectively, points where significant peaks or bumps in the original solvent excluded surface were removed.">
-				 Peaks/Bowls</div>
+            
+				<div class="view_toggle"  
+					title="Hydrogen bond stickers are placed on the surface in areas that are close to one or more atoms that could form an external hydrogen bond.">
+                	<img src="../images/icons/off_120_30.png" id="ToggleHBondsStickers" onClick="ToggleHBondsStickersVisible();"/>
+					H-Bonds</div>
+                    
+				<div class="view_toggle" 
+					title="Detected Pockets indicate regions of the surface that resemble binding pockets, according to a variant of the Ligsite pocket detector.">
+                    <img src="../images/icons/off_120_30.png" id="ToggleDetectedPocketsStickers" onClick="ToggleDetectedPocketsStickersVisible();"/>
+					Detected Pockets</div>
+                    
+				<div class="view_toggle" 
+					title="Interfaces indicate regions of the surface in close proximity to another chain.">
+                    <img src="../images/icons/off_120_30.png" id="ToggleInterfacesStickers" onClick="ToggleInterfacesStickersVisible();"/>
+					Interferences</div>
+                    
+				<div class="view_toggle" 
+					 title="peak/bowl stickers display as an 'X' or 'O', respectively, points where significant peaks or bumps in the original solvent excluded 				
+                     surface were removed.">
+                    <img src="../images/icons/on_120_30.png" id="TogglePeakBowlStickers" onClick="TogglePeakBowlStickersVisible();"/>
+				 	Peaks/Bowls</div>
 				
+                <div class='viewer_form'>
+                	<h2>Current Protein</h2>
+                    <h3>Name: </h3><p><?php echo printJobName($id,$conn);?></p>
+                    <h3>Code: </h3><p><?php echo $id;?></p>
+                </div>
+                
+                <div class='viewer_form'>
+                	<form action="#" method="post" id="view_form">
+                    <h3>&nbsp;</h3>
+					<input type="text" name="id"><p>Viewer Code</p>
+					<img class="submit" src="../images/view.png" onclick="submitForm('view_form',true,'');"/>
+					</form>
+                </div>
+                
 			</div>
 	</div>
 </div>

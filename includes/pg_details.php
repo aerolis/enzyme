@@ -2,7 +2,7 @@
 
 ob_start();
 
-$main_stylesheet = "/enzyme2/includes/master.css";
+$main_stylesheet = "/enzyme/includes/master.css";
 
 $now_at_dir = getcwd();
 chdir(realpath("/home/content/10/8826310/html/enzyme"));

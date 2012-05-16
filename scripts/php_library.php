@@ -42,6 +42,17 @@ function logout($conn,$cookie_domain)
 		return 0;
 	}
 }
+function printJobName($code,$conn)
+{
+	$s	= "SELECT * FROM gr_jobs WHERE job_file='$code'";
+	$r	= mysql_query($s,$conn);
+	if (mysql_num_rows($r) > 0)
+	{
+		$job	= mysql_fetch_array($r);
+		return $job['job_name'];
+	}
+	return false;
+}
 function printJobStatus($status)
 {
 	switch($status)

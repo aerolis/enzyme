@@ -19,7 +19,7 @@ include("../includes/header_a.php");
 </div>
 
 
-<img src="images/GRAPE.jpg" />
+<img src="../images/GRAPE.jpg" />
 
 <div class="main_body">
 
