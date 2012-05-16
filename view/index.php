@@ -3,6 +3,21 @@
 include("../includes/pg_details.php");
 $pg_title = "Protein Viewer";
 
+//get the code from post/get
+if (isset($_GET['id']))
+	$id = trim($_GET['id']);
+//post data will override get data
+if (isset($_POST['id']))
+	$id = trim($_POST['id']);
+
+//check for null
+if ($id == '0' || $id == NULL)
+	unset($id);
+
+//check for valid data
+if (!check_viewer_code($id,$conn))
+	unset($id);
+
 //include header block to page
 include("../includes/header_a.php");
 
@@ -70,7 +85,7 @@ include("../includes/header_a.php");
 		OnResize();
 		
 		var urlVars = getUrlVars();
-		var id = urlVars["id"];
+		var id = <?php echo '"' . $id . '"'; ?>;
 		var path = "../output";
 		
 		Surface = new surfacedata(id, path);
@@ -96,6 +111,7 @@ include("../includes/header_a.php");
 		// Make sure the canvas height is correct
 		var height =  window.innerHeight;
 		$("#v_content").height(height-185);
+		$("#v_cover").height(height-185);
 	}
 	
 	
@@ -168,9 +184,17 @@ include("../includes/header_a.php");
 
 <?php
 
-if (!isset($_GET['id']))
+if (!isset($id))
 {
-	//echo "<div class=\"v_cover\">test</div>";	
+	echo "<div class='center'><div class='login_form'><form action=\"#\" method=\"post\">";
+		echo "<h3>Please enter a valid protein viewer code to get started</h3>";
+		echo "<input type=\"text\" name=\"id\"><p style=\"color: white;\">Viewer Code</p>";
+		echo "<img class=\"submit\" src=\"../images/view.png\" onclick=\"submitForm('submit_protein',true,'');\"/>";
+	echo "</form></div></div>";
+	
+	echo "<div id=\"v_cover\"></div>";	
+	
+
 }
 ?>
 
@@ -204,8 +228,8 @@ if (!isset($_GET['id']))
 				 Peaks/Bowls</div>
 				
 			</div>
-		</div>
 	</div>
+</div>
 
 <?php
 //include footer block into webpage

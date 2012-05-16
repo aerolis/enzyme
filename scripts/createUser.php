@@ -27,7 +27,7 @@ if ($pass1 != $pass2)
 	//passwords don't match
 	header("Location: " . $webroot . "/register/index.php?warn=1");
 }
-else if ($email1 != $email2)
+else if ($email1 != $email2 || !strpos($email1,"@"))
 {
 	//emails don't match
 	header("Location: " . $webroot . "/register/index.php?warn=2");	

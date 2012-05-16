@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <dwsync>
-<file name="folder.png" server="introspectarts.org" local="129809810360922048" remote="129809994600000000" />
-<file name="monitor.png" server="introspectarts.org" local="129809810180441725" remote="129809994600000000" />
-<file name="cancel.png" server="introspectarts.org" local="129809831899183966" remote="129810011400000000" />
+<file name="folder.png" server="introspectarts.org" local="129809810360922048" remote="129816055200000000" />
+<file name="monitor.png" server="introspectarts.org" local="129809810180441725" remote="129816055200000000" />
+<file name="cancel.png" server="introspectarts.org" local="129809831899183966" remote="129816055200000000" />
+<file name="down.png" server="introspectarts.org" local="129815874863492938" remote="129816055200000000" />
+<file name="left.png" server="introspectarts.org" local="129815874830581055" remote="129816055200000000" />
+<file name="right.png" server="introspectarts.org" local="129815874946987713" remote="129816055200000000" />
+<file name="up.png" server="introspectarts.org" local="129815874900725067" remote="129816055200000000" />
+<file name="spacer.png" server="introspectarts.org" local="129815876391130314" remote="129816056400000000" />
+<file name="no_200_50.png" server="introspectarts.org" local="129815889370612698" remote="129816069000000000" />
+<file name="no_120_30.png" server="introspectarts.org" local="129815912696916886" remote="129816092400000000" />
+<file name="yes_120_30.png" server="introspectarts.org" local="129815941936429290" remote="129816121800000000" />
+<file name="cd.png" server="introspectarts.org" local="129815923112362615" remote="129816102600000000" />
+<file name="cd_banned.png" server="introspectarts.org" local="129815929271024871" remote="129816109200000000" />
+<file name="monitor_banned.png" server="introspectarts.org" local="129815927592768880" remote="129816107400000000" />
 </dwsync>

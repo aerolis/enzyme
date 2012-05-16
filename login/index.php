@@ -10,10 +10,10 @@ include("../includes/header_a.php");
 <div class="main_body">
 <div class="login_form">
 <h1>Login</h1>
-<form action="../scripts/login.php" method="post">
+<form action="../scripts/login.php" method="post" id="login_form">
 <input type="text" name="email" /><p>Email Address</p>
 <input type="password" name="pass" /><p>Password</p>
-<input type="submit" value="Login" style="width: 100px; background-color:#CCC; color: black; border:#666 3px solid; padding: 0 0 0 0;" />
+<img class="submit" src="../images/login.png" onclick="submitForm('login_form',true,'');"/>
 <p><a href="lostpassword/">I forgot my password</a></p>
 </form>
 
